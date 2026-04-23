@@ -1,10 +1,10 @@
 namespace: portfolio
 
-replicaCount: 2
+replicaCount: 1
 
 image:
-  repository: ghcr.io/OWNER/portfolio  # Replace OWNER with your GitHub username
-  tag: latest
+  repository: ghcr.io/tomdein/portfolio  # Replace tomdein with your GitHub username
+  tag: "" # The tag will be set by the release workflow, so it can be left empty here
   pullPolicy: IfNotPresent
 
 resources:
@@ -19,11 +19,14 @@ publicContent:
   hostPath: /data/portfolio/public  # Path on the cluster node to mount as /usr/share/nginx/html
 
 ingress:
-  host: portfolio.example.com  # Replace with your domain
-  className: nginx
+  host: tomdein.deini.eu  # Replace with your domain
+  className: traefik # Set to your ingress class if needed, e.g., "nginx" or "traefik"
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/hostname: tomdein.deini.eu
+    cert-manager.io/cluster-issuer: letsencrypt
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
-    enabled: false
-    secretName: portfolio-tls
+    enabled: true
+    secretName: portfolio-tls-secret
