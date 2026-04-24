@@ -17,6 +17,8 @@ resources:
 
 publicContent:
   hostPath: /data/portfolio/public  # Path on the cluster node to mount as /usr/share/nginx/html
+publicImages:
+  hostPath: /data/portfolio/images  # Path on the cluster node to mount as /usr/share/nginx/html/images
 
 ingress:
   host: tomdein.deini.eu  # Replace with your domain
