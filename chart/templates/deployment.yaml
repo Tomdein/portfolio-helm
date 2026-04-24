@@ -48,9 +48,15 @@ spec:
             periodSeconds: 5
           volumeMounts:
             - name: public-content
-              mountPath: /usr/share/nginx/html
+              mountPath: /usr/share/nginx/html/content
+            - name: public-images
+              mountPath: /usr/share/nginx/html/images/projects
       volumes:
         - name: public-content
           hostPath:
             path: {{ .Values.publicContent.hostPath }}
+            type: DirectoryOrCreate
+        - name: public-images
+          hostPath:
+            path: {{ .Values.publicImages.hostPath }}
             type: DirectoryOrCreate
